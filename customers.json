@@ -39,18 +39,18 @@
   },
   {
     "id": "3",
-    "name": "Danny Freese",
-    "username": "dfreese",
+    "name": "Jess Hamby",
+    "username": "jhamby",
     "information": {
       "address": "567 Street St",
       "phone_number": "555-1234",
-      "email": "danny@example.com",
+      "email": "jayhambz@example.com",
       "frequent_flier_number": "FF987abc",
       "payment_methods": [
         {
-          "id": "dfreese-PM-9734",
+          "id": "jhamby-PM-9734",
           "redacted_card_number": "****-****-****-9734",
-          "card_holder_name": "Danny F",
+          "card_holder_name": "Jessica H",
           "expiration_date": "09/28"
         }
       ]
