@@ -26,13 +26,13 @@ build: check-dependencies
 	npm install
 
 build-docker:
-	@docker build -t kong-air-customer-svc:dev .
+	@docker build -t kongair/customer:latest .
 
 run: check-dependencies
 	npm run start
 
 docker: build-docker
-	@docker run -d --name kong-air-customer-svc -p ${KONG_AIR_CUSTOMER_PORT}:${KONG_AIR_CUSTOMER_PORT} kong-air-customer-svc:dev
+	@docker run -d --name kongair-customer -p ${KONG_AIR_CUSTOMER_PORT}:${KONG_AIR_CUSTOMER_PORT} kongair/customer:latest
 
 kill-docker:
 	-@docker stop kong-air-customer-svc
