@@ -13,6 +13,11 @@ As of now, this example server does not provide a way to update customer
 information, only to retrieve it with a `GET` request. The server loads
 example customer information from the [customer.json](customer.json) file.
 
+### Security
+
+See [Security](SECURITY.md) for information on how to report security vulnerabilities.
+
+
 ### Prerequisites
 
 * `node` : tested with `v22.13.0`
