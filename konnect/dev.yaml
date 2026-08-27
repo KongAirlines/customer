@@ -1,6 +1,6 @@
 _defaults:
   kongctl:
-    namespace: customer-information-dev
+    namespace: customer
 
 control_planes:
   - ref: customer-data-dev

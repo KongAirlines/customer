@@ -1,6 +1,6 @@
 _defaults:
   kongctl:
-    namespace: customer-information-prod
+    namespace: customer
 
 control_planes:
   - ref: kongairlines-prod
