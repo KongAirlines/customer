@@ -13,6 +13,7 @@ apis:
   - ref: customer-information-prod-api
     name: KongAir Customer Information
     description: Production Catalog API owned by the Customer service team.
+    version: 0.1.0
     versions:
       - ref: customer-information-prod-0-1-0
         version: !file ../openapi/versions/0.1.0.yaml#info.version
