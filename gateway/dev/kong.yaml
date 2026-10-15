@@ -7,15 +7,7 @@ services:
   id: 7d163f5f-0af7-59dc-aaeb-906849e68ac1
   name: customer-information-dev
   path: /
-  plugins:
-  - config:
-      match_policy: required
-    name: ace
-    tags:
-    - env-dev
-    - team-customer-data
-    - owner-customer
-    - scope-customer-information-dev
+  plugins: []
   port: 443
   protocol: https
   routes:
