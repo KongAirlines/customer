@@ -6,7 +6,7 @@ info:
   description: |
     KongAir Customer Information service provides customer information
     (payment methods, contact info, frequent flyer, etc...)
-  version: 0.1.0
+  version: 0.2.0-beta.1
   title: Customer Information Service
 
 servers:
