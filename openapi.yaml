@@ -6,7 +6,7 @@ info:
   description: |
     KongAir Customer Information service provides customer information
     (payment methods, contact info, frequent flyer, etc...)
-  version: 0.2.0-beta.1
+  version: 0.2.0-beta.2
   title: Customer Information Service
 
 servers:
@@ -14,32 +14,6 @@ servers:
   description: KongAir API Server
 
 paths:
-  /customer/health:
-    get:
-      summary: Health check endpoint
-      description: Endpoint that returns the service health status.
-      operationId: cust-health-check 
-      responses:
-        '200':
-          description: Service is healthy
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
-        '500':
-          description: Service is unhealthy
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: "unhealthy"
   "/customer":
     get:
       summary: Fetch a customers information

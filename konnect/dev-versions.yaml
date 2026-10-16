@@ -1,0 +1,14 @@
+_defaults:
+  kongctl:
+    namespace: customer
+
+apis:
+  - ref: customer-information-dev-api
+    _external:
+      selector:
+        matchFields:
+          name: KongAir Customer Information - Development
+    versions:
+      - ref: customer-information-dev-current
+        version: !file ../openapi.yaml#info.version
+        spec: !file ../openapi.yaml

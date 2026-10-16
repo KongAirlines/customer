@@ -19,10 +19,6 @@ apis:
     name: KongAir Customer Information - Development
     description: Development Catalog API owned by the Customer service team.
     version: !file ../openapi.yaml#info.version
-    versions:
-      - ref: customer-information-dev-current
-        version: !file ../openapi.yaml#info.version
-        spec: !file ../openapi.yaml
     publications:
       - ref: customer-information-dev-publication
         portal_id: !lookup {name: KongAirlines Development}
