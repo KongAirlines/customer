@@ -14,7 +14,7 @@ servers:
   description: KongAir API Server
 
 paths:
-  /health:
+  /customer/health:
     get:
       summary: Health check endpoint
       description: Endpoint that returns the service health status.
