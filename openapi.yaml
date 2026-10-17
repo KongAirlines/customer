@@ -13,6 +13,9 @@ servers:
 - url: https://api.kong-air.com
   description: KongAir API Server
 
+security:
+  - bearerAuth: []
+
 paths:
   "/customer":
     get:
@@ -29,6 +32,11 @@ paths:
           description: Customer Not Found
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   responses:
     CustomerSingle:
       description: A get action response for a single Customer
