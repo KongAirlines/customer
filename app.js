@@ -1,5 +1,4 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const YAML = require('yamljs');
 const path = require('path');
 const openapiValidator = require('express-openapi-validator');
@@ -7,6 +6,12 @@ const fs = require('fs');
 
 const app = express();
 app.use(express.json());
+
+// Operational health is intentionally available to the runtime platform,
+// but it is not part of the client-facing OpenAPI contract or Gateway routes.
+app.get('/health', (_, res) => {
+  res.status(200).json({ status: 'OK' });
+});
 
 // Load your OpenAPI spec file
 const openApiSpecPath = path.join(__dirname, 'openapi.yaml');
@@ -17,13 +22,11 @@ app.use(
     apiSpec: openApiDocument,
     validateRequests: true, // (default)
     validateResponses: true, // false by default
+    // Kong Gateway validates the bearer token and supplies the trusted
+    // X-Consumer-Username identity used below.
+    validateSecurity: false,
   }),
 );
-
-// Health check endpoint
-app.get('/health', (_, res) => {
-  res.status(200).json({ status: 'OK' });
-});
 
 app.use((req, res, next) => {
 

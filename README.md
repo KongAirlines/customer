@@ -5,7 +5,11 @@ payment methods, contact info, frequent flyer, etc...
 
 The API specification can be found in the [openapi.yaml](openapi.yaml) file.
 
-Customers are identified by the `x-consumer-username` header. This username is how the service segments customer information.
+Gateway clients authenticate with a signed JWT bearer token. Kong Gateway
+validates the token, maps its issuer to a Consumer, and replaces
+`X-Consumer-Username` with that Consumer's username before proxying the
+request. The service trusts that Gateway-supplied identity to segment customer
+data; it does not parse JWTs itself.
 
 **This is an example service only. Proper security measures should be followed in production use cases.**
 
@@ -57,9 +61,9 @@ npm run dev
 
 ### Example client requests
 
-Read all customer information for the user `dfreese`:
+Direct local requests bypass Kong Gateway, so supply a test identity header:
 ```
-curl -s localhost:3000/customer -H "x-consumer-username: dfreese"
+curl -s localhost:3000/customer -H "x-consumer-username: jdoe"
 ```
 
 ## Konnect Reference Platform
@@ -73,10 +77,11 @@ Konnect desired state. It is a protected-API example for the
 - [`konnect/prod.yaml`](konnect/prod.yaml) owns the public production Catalog
   API. Production Gateway state is promoted to the
   [platform repository](https://github.com/KongAirlines/platform) for review.
-- The Platform repository owns the global Access Control Enforcement plugin;
-  this repository supplies the API operations and authentication strategy that
-  determine which Customer Information requests require application
-  credentials.
+- The Platform repository owns shared Gateway Consumers, JWT verification
+  credentials, and the global Access Control Enforcement plugin. This
+  repository owns the service-scoped JWT policy. ACE limits traffic to
+  published Catalog operations; it does not replace JWT authentication or
+  require a Dev Portal application credential for this API.
 - The root [`openapi.yaml`](openapi.yaml) is the next beta contract, while
   [`openapi/versions/`](openapi/versions/) retains immutable stable releases.
 

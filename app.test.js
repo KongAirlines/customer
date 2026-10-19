@@ -33,6 +33,17 @@ describe('Customer API', () => {
       });
   });
 
+  it('should keep the health endpoint available without identity', (done) => {
+    request
+      .get('/health')
+      .expect(200)
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res.body).to.deep.equal({ status: 'OK' });
+        done();
+      });
+  });
+
   it('should return 401 unauthorized when not authenticated', (done) => {
     request
       .get('/customer')
