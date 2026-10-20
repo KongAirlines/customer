@@ -2,8 +2,8 @@ const express = require('express');
 const YAML = require('yamljs');
 const path = require('path');
 const openapiValidator = require('express-openapi-validator');
-const fs = require('fs');
 
+const demoAccount = require('./demoAccount');
 const app = express();
 app.use(express.json());
 
@@ -22,8 +22,7 @@ app.use(
     apiSpec: openApiDocument,
     validateRequests: true, // (default)
     validateResponses: true, // false by default
-    // Kong Gateway validates the bearer token and supplies the trusted
-    // X-Consumer-Username identity used below.
+    // ACE authorizes the Portal application; Gateway overwrites the account header.
     validateSecurity: false,
   }),
 );
@@ -34,38 +33,27 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // Extract username from X-Consumer-Username header
-  const usernameHeader = req.headers['x-consumer-username'];
-
-  if (usernameHeader) {
-    // If a valid username is found, set it in the req object and continue
-    if (typeof usernameHeader === 'string') {
-      req.user = usernameHeader;
-      next();
-    } else {
-      // If there is no valid username, reject the request
-      res.status(401).end();
-    }
-  } else {
-    // If there is no username, reject the request
-    res.status(401).end();
-  }
+  const account = demoAccount(req.headers['x-kongair-account-id']);
+  if (!account) return res.status(401).end();
+  req.account = account;
+  next();
 });
 
-// Load the customer data from the JSON file
-let customerData = [];
-fs.readFile(path.join(__dirname, 'customers.json'), 'utf8', (err, data) => {
-  if (err) throw err;
-  customerData = JSON.parse(data);
-});
-
+// Every application sees a fictional customer belonging only to its demo account.
 app.get('/customer', (req, res) => {
-  const customer = customerData.find(c => c.username === req.user);
-  if (customer) {
-    res.json(customer);
-  } else {
-    res.status(404).end();
-  }
+  const { id, username } = req.account;
+  res.json({
+    id,
+    username,
+    name: 'KongAir Demo Passenger',
+    information: {
+      address: '1 Example Avenue',
+      phone_number: '555-0100',
+      email: `${username}@example.com`,
+      frequent_flier_number: username,
+      payment_methods: [],
+    },
+  });
 });
 
 // Error handler

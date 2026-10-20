@@ -6,7 +6,7 @@ info:
   description: |
     KongAir Customer Information service provides customer information
     (payment methods, contact info, frequent flyer, etc...)
-  version: 0.3.0-beta.2
+  version: 0.4.0-beta.1
   title: Customer Information Service
 
 servers:
@@ -14,7 +14,7 @@ servers:
   description: KongAir API Server
 
 security:
-  - bearerAuth: []
+  - applicationKey: []
 
 paths:
   "/customer":
@@ -28,15 +28,18 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/CustomerSingle'
+        '401':
+          description: An approved Portal application API key is required
         '404':
           description: Customer Not Found
 
 components:
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    applicationKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key from an approved Dev Portal application registration
   responses:
     CustomerSingle:
       description: A get action response for a single Customer
