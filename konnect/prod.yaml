@@ -13,6 +13,8 @@ apis:
   - ref: customer-information-prod-api
     name: KongAir Customer Information
     description: Production Catalog API owned by the Customer service team.
+    # Authorize ACE-mapped operation removal during API updates (kongctl >= 1.21).
+    force_delete: true
     version: 0.3.0
     versions:
       - ref: customer-information-prod-0-1-0
